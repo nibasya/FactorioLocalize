@@ -11,6 +11,13 @@ for($i=0;$i -lt $file.Length; $i++){
     Copy-Item $src -Destination $dest -Recurse
     Write-Output "Generated $($name[$i])"
   }
+  if ($file[$i] -like "*.zip"){
+    Expand-Archive -Path $($targetpath+$file[$i]) -DestinationPath $targetpath
+    Remove-Item -Path $($targetpath+$file[$i])
+    Write-Output "Expanded $($file[$i])"
+    $tmp = $file[$i] -split ".zip"
+    $file[$i] = $tmp[0]
+  }
   $src = $targetpath + $file[$i] + $targetfile
   $dest = $name[$i] + $targetfile
   $result = Compare-Object -ReferenceObject (Get-Content -Path $dest) -DifferenceObject (Get-Content -Path $src)
