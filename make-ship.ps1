@@ -22,7 +22,7 @@ $name = ForEach-Object {$file -split "_"} | Where-Object {$_ -like "aai-*"}
 for($i=0;$i -lt $file.Length; $i++){
     if ($file[$i] -like "*.zip"){
         Write-Output "Un-updated mod exists! $($file[$i])"
-        break
+        exit
     }
     New-Item -Path $($destroot + "\" + $file[$i] + $locale) -ItemType Directory | Out-Null
     Copy-Item -Path $($name[$i] + $locale + "strings.cfg") -Destination $($destroot + "\" + $file[$i] + $locale + "strings.cfg") -Recurse -Force
